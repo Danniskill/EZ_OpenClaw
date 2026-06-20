@@ -110,7 +110,8 @@ const renderCompatibilityBadge = (variant, hwInfo) => {
   }
 };
 
-const ModelSelectorRow = ({ label, role, currentValue, onChange, hwInfo, onPull, t }) => {
+const ModelSelectorRow = ({ label, role, currentValue, onChange, hwInfo, onPull }) => {
+  const { t } = useTranslation();
   const parsed = getSelectedModelAndVariant(currentValue);
   const selectedModel = OLLAMA_MODELS.find(m => m.id === parsed.modelId) || null;
   const selectedVariant = selectedModel?.variants.find(v => v.tag === currentValue) || null;
@@ -144,11 +145,11 @@ const ModelSelectorRow = ({ label, role, currentValue, onChange, hwInfo, onPull,
           {onPull && currentValue && (
             <button
               onClick={() => onPull(currentValue)}
-              title={t?.model_pull_title || 'Download/pull this model via Ollama'}
+              title={t('model_pull_title') || 'Download/pull this model via Ollama'}
               className="px-2 py-0.5 bg-win11-cardDark hover:bg-win11-accent hover:text-white border border-win11-borderDark rounded text-[9px] text-gray-300 flex items-center space-x-1 transition-colors"
             >
               <Download className="w-2.5 h-2.5" />
-              <span>{t?.model_pull_btn || 'Pull'}</span>
+              <span>{t('model_pull_btn') || 'Pull'}</span>
             </button>
           )}
         </div>
@@ -156,25 +157,25 @@ const ModelSelectorRow = ({ label, role, currentValue, onChange, hwInfo, onPull,
       
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="space-y-1">
-          <span className="text-[10px] text-gray-500 font-semibold block">{t?.model_family_label || 'Model Family'}</span>
+          <span className="text-[10px] text-gray-500 font-semibold block">{t('model_family_label') || 'Model Family'}</span>
           <select 
             value={parsed.modelId || ''} 
             onChange={handleModelChange}
             className="w-full bg-win11-cardDark border border-win11-borderDark rounded px-2.5 py-1.5 text-xs text-white focus:border-win11-accent focus:outline-none"
           >
-            <option value="" disabled>{t?.model_select_placeholder || 'Select a model...'}</option>
+            <option value="" disabled>{t('model_select_placeholder') || 'Select a model...'}</option>
             {filteredModels.map(m => (
               <option key={m.id} value={m.id}>
                 {m.name} ({m.provider})
               </option>
             ))}
-            <option value="__custom__">{t?.model_custom_tag || 'Custom Model Tag...'}</option>
+            <option value="__custom__">{t('model_custom_tag') || 'Custom Model Tag...'}</option>
           </select>
         </div>
 
         {parsed.modelId !== '__custom__' && selectedModel ? (
           <div className="space-y-1">
-            <span className="text-[10px] text-gray-500 font-semibold block">{t?.model_quantization_label || 'Quantization / Tag'}</span>
+            <span className="text-[10px] text-gray-500 font-semibold block">{t('model_quantization_label') || 'Quantization / Tag'}</span>
             <select 
               value={currentValue} 
               onChange={handleVariantChange}
@@ -193,12 +194,12 @@ const ModelSelectorRow = ({ label, role, currentValue, onChange, hwInfo, onPull,
           </div>
         ) : (
           <div className="space-y-1">
-            <span className="text-[10px] text-gray-500 font-semibold block">{t?.model_custom_tag_label || 'Custom Tag (e.g. llama3:8b)'}</span>
+            <span className="text-[10px] text-gray-500 font-semibold block">{t('model_custom_tag_label') || 'Custom Tag (e.g. llama3:8b)'}</span>
             <input 
               type="text"
               value={currentValue}
               onChange={(e) => onChange(e.target.value)}
-              placeholder={t?.model_custom_placeholder || 'Enter Ollama model tag...'}
+              placeholder={t('model_custom_placeholder') || 'Enter Ollama model tag...'}
               className="w-full bg-win11-cardDark border border-win11-borderDark rounded px-2.5 py-1.5 text-xs text-white focus:border-win11-accent focus:outline-none"
             />
           </div>
@@ -2098,7 +2099,26 @@ export default function App() {
     );
   };
 
-  return isSetupComplete ? renderMainDashboard() : renderSetupWizard();
+  return (
+    <>
+      {updateStatus && (
+        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 border px-6 py-3 flex justify-between items-center text-sm rounded-lg shadow-lg z-[9999] min-w-[300px] ${
+          updateStatus.status === 'error' 
+            ? 'bg-red-500/20 border-red-500 text-red-200' 
+            : 'bg-win11-accent/20 border-win11-accent text-white'
+        }`}>
+          <span>
+            {updateStatus.status === 'error' && <span className="text-red-400 font-bold mr-2">Error:</span>}
+            {updateStatus.status === 'available' && (t('update_available') || 'Update Available!')}
+            {updateStatus.status === 'downloading' && `${t('update_downloading') || 'Downloading...'} (${Math.round(updateStatus.progress || 0)}%)`}
+            {updateStatus.status === 'downloaded' && (t('update_downloaded') || 'Update Ready! Restart to install.')}
+            {updateStatus.status === 'error' && (updateStatus.message || 'Update failed.')}
+          </span>
+        </div>
+      )}
+      {isSetupComplete ? renderMainDashboard() : renderSetupWizard()}
+    </>
+  );
 }
 
 export { ErrorBoundary };

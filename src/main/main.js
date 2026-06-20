@@ -148,27 +148,7 @@ function createWindow() {
   startMonitoring();
 }
 
-function setupTray() {
-  // Use a default icon or generate an empty one if we don't have a real icon yet
-  // In a real scenario, use: const iconPath = path.join(__dirname, 'icon.png');
-  // For now, let's just create an empty NativeImage to prevent crash or rely on default
-  tray = new Tray(path.join(__dirname, '../preload/icon-placeholder.png')); // We will ignore error if not exists by try-catch or create a dummy
-  const contextMenu = Menu.buildFromTemplate([
-    { label: 'Show Dashboard', click: () => { mainWindow?.show(); } },
-    { type: 'separator' },
-    { label: 'Quit EZ-OpenClaw', click: () => { 
-        isQuitting = true; 
-        app.quit(); 
-      } 
-    }
-  ]);
-  tray.setToolTip('EZ-OpenClaw Gateway');
-  tray.setContextMenu(contextMenu);
-  
-  tray.on('click', () => {
-    mainWindow?.show();
-  });
-}
+
 
 function setupAutoUpdater() {
   autoUpdater.autoDownload = false;
@@ -185,6 +165,7 @@ function setupAutoUpdater() {
   });
   autoUpdater.on('error', (err) => {
     console.error('AutoUpdater error:', err);
+    if (mainWindow) mainWindow.webContents.send('update-status', { status: 'error', message: err.message });
   });
 }
 
