@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    margin: 0;
+    font-family: 'Segoe UI Variable', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    user-select: none;
+  }
+
+  /* Custom scrollbar to match Win11 dark theme */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #1f1f1f;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #3c3c3c;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #4f4f4f;
+  }
+}
+
+:root {
+  --win11-bg: #1f1f1f;
+  --win11-card: #2b2b2b;
+  --win11-border: #3c3c3c;
+}
+
+/* Light mode variable definitions and style overrides via Media Query */
+@media (prefers-color-scheme: light) {
+  :root {
+    --win11-bg: #f3f3f3;
+    --win11-card: #ffffff;
+    --win11-border: #e5e5e5;
+    
+    /* Global body text override for light mode */
+    color: #1f2937 !important;
+  }
+
+  /* Light mode text color overrides (excluding colored background containers/buttons) */
+  .text-white:not(.bg-win11-accent, .bg-win11-accent *, .bg-win11-accentHover, .bg-win11-accentHover *, .bg-red-600, .bg-red-600 *, .bg-red-700, .bg-red-700 *, .bg-green-600, .bg-green-600 *, .bg-green-700, .bg-green-700 *) {
+    color: #111827 !important;
+  }
+
+  .text-gray-100:not(.bg-win11-accent, .bg-win11-accent *, .bg-win11-accentHover, .bg-win11-accentHover *, .bg-red-600, .bg-red-600 *, .bg-red-700, .bg-red-700 *, .bg-green-600, .bg-green-600 *, .bg-green-700, .bg-green-700 *) {
+    color: #1f2937 !important;
+  }
+
+  .text-gray-200:not(.bg-win11-accent, .bg-win11-accent *, .bg-win11-accentHover, .bg-win11-accentHover *, .bg-red-600, .bg-red-600 *, .bg-red-700, .bg-red-700 *, .bg-green-600, .bg-green-600 *, .bg-green-700, .bg-green-700 *) {
+    color: #374151 !important;
+  }
+
+  .text-gray-300:not(.bg-win11-accent, .bg-win11-accent *, .bg-win11-accentHover, .bg-win11-accentHover *, .bg-red-600, .bg-red-600 *, .bg-red-700, .bg-red-700 *, .bg-green-600, .bg-green-600 *, .bg-green-700, .bg-green-700 *) {
+    color: #4b5563 !important;
+  }
+
+  .text-gray-400:not(.bg-win11-accent, .bg-win11-accent *, .bg-win11-accentHover, .bg-win11-accentHover *, .bg-red-600, .bg-red-600 *, .bg-red-700, .bg-red-700 *, .bg-green-600, .bg-green-600 *, .bg-green-700, .bg-green-700 *) {
+    color: #6b7280 !important;
+  }
+
+  .text-gray-500:not(.bg-win11-accent, .bg-win11-accent *, .bg-win11-accentHover, .bg-win11-accentHover *, .bg-red-600, .bg-red-600 *, .bg-red-700, .bg-red-700 *, .bg-green-600, .bg-green-600 *, .bg-green-700, .bg-green-700 *) {
+    color: #9ca3af !important;
+  }
+
+  /* Light mode hover text color overrides on transparent/card backgrounds */
+  .hover\:text-white:not(.bg-win11-accent, .bg-win11-accent *, .bg-win11-accentHover, .bg-win11-accentHover *, .bg-red-600, .bg-red-700, .bg-green-600, .bg-green-700):hover {
+    color: #111827 !important;
+  }
+
+  .hover\:text-gray-100:not(.bg-win11-accent, .bg-win11-accent *, .bg-win11-accentHover, .bg-win11-accentHover *, .bg-red-600, .bg-red-700, .bg-green-600, .bg-green-700):hover {
+    color: #1f2937 !important;
+  }
+
+  /* Ensure buttons with accent color background keep their white text */
+  .bg-win11-accent,
+  .bg-win11-accent *,
+  .bg-win11-accentHover,
+  .bg-win11-accentHover * {
+    color: #ffffff !important;
+  }
+
+  /* Exclude terminal console from light mode text overrides so it stays dark-themed */
+  .font-mono.bg-black * {
+    color: inherit !important;
+  }
+  .font-mono.bg-black {
+    background-color: black !important;
+    color: #d1d5db !important;
+  }
+
+  /* Custom scrollbar to match Win11 light theme */
+  ::-webkit-scrollbar-track {
+    background: #f3f3f3;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+}
