@@ -1544,9 +1544,11 @@ export default function App() {
                   )}
                   {envStatus.openclaw.running ? (
                     <iframe 
-                      src={gatewayToken ? `http://localhost:18789/#token=${gatewayToken}` : "http://localhost:18789"} 
+                      src={gatewayToken ? `http://127.0.0.1:18789/#token=${gatewayToken}` : "http://127.0.0.1:18789"} 
                       className="w-full h-[550px] bg-white rounded border border-win11-borderDark"
                       title="OpenClaw Chat Dashboard"
+                      allow="clipboard-read; clipboard-write; display-capture"
+                      sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
                     />
                   ) : (
                     <div className="w-full h-[550px] bg-black/40 rounded border border-win11-borderDark flex flex-col items-center justify-center space-y-3 text-gray-400">
