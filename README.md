@@ -3,6 +3,11 @@
 ## Introduction
 EZ-OpenClaw is a Desktop GUI application built with Electron, React, and Tailwind CSS following the **Windows 11 Settings UI (Fluent Design)** language. The application simplifies and automates the entire process of installing, configuring, and operating OpenClaw (an AI agent daemon framework) and Ollama on Windows without the need for a command-line interface (CLI).
 
+### Target Audience & Important Notes
+- **No Coding Experience Required:** This software is perfectly suited for users who have no experience with coding or command-line interfaces but still want to seamlessly experience and run AI agents.
+- **Maximum Convenience:** To ensure the highest level of convenience and a "plug-and-play" experience, this software utilizes a portable version of Ollama by default, keeping your system environment clean.
+- **For Advanced Users:** If you already have Ollama installed globally with your own downloaded models, or have a pre-configured OpenClaw environment with custom settings, you might not need this software. However, if you still wish to use this GUI with your existing setup, you can modify `src/main/main.js` to bypass the portable environment and point the application to your custom configurations.
+
 ## Features
 
 - **Automated Setup Wizard:** Flexible Node.js configuration allows you to use your system's Node.js or automatically download and extract a portable, isolated version. It also automates the installation of Ollama Windows Portable, initializes the daemon, and sets up isolated model storage.
